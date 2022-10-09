@@ -1,0 +1,13 @@
+python-dotenv
+ujson
+httpx
+requests
+asyncio
+pytz
+uvicorn
+fastapi
+fastapi_utils
+pydantic
+numpy
+aiofiles
+pymongo

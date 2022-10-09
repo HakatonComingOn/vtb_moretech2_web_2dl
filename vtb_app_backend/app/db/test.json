@@ -1,0 +1,52 @@
+{"users":[
+    {
+    "user_id": 1,
+    "name": "Воропаев Денис Юрьевич",
+    "phone": "8-800-555-3535",
+    "is_show_phone": true,
+    "telegram": "@innvedent",
+    "is_show_telegram": true,
+    "email": "email@bk.ru",
+    "is_show_email": true,
+    "role": ["user"],
+    "department": {
+        "name": "development",
+        "department_id": 1
+        },
+    "job_title": "frontend developer"
+
+    },
+    {
+        "user_id": 2,
+        "name": "Алексей",
+        "phone": "8-800-555-9999",
+        "is_show_phone": false,
+        "telegram": "@alexey",
+        "is_show_telegram": true,
+        "email": "test@bk.ru",
+        "is_show_email": false,
+        "role": ["user","admin"],
+        "department": {
+            "name": "development",
+            "department_id": 1
+            },
+        "job_title": "backend developer"
+    },
+
+    {
+        "user_id": 3,
+        "name": "Кропотова Дарья Александровна",
+        "phone": "8-800-555-0000",
+        "is_show_phone": true,
+        "telegram": "@darya",
+        "is_show_telegram": false,
+        "email": "darya@bk.ru",
+        "is_show_email": true,
+        "role": ["user"],
+        "department": {
+            "name": "design",
+            "department_id": 2
+            },
+        "job_title": "designer"
+    }
+]}

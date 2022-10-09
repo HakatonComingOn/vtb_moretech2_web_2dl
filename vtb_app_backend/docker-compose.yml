@@ -1,0 +1,57 @@
+version: '3'
+services:
+
+  vtb_auth:
+    container_name: vtb_auth
+    build:
+      context: .
+      dockerfile: ./docker/python/Dockerfile
+    #command: /bin/bash -c "python -m pip install -r /app/req.txt --no-cache-dir && python main.py"
+    command: /bin/bash -c "python main.py"
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    depends_on:
+      - vtb_app_mongo
+    env_file:
+      #- ../../.env
+      ./.mongo_settings
+    working_dir: /app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "1"
+    volumes:
+      - ./app:/app
+    networks:
+      - app-network
+
+# docker exec -it vtb_auth pip3 install pymongo
+  vtb_app_mongo:
+    container_name: vtb_app_mongo
+    image: mongo:latest
+    env_file:
+      #- ../../.env
+      ./.mongo_settings
+    environment:
+      MONGO_INITDB_DATABASE: test
+      # MONGO_INITDB_ROOT_USERNAME: root
+      # MONGO_INITDB_ROOT_PASSWORD: mongopass
+    # depends_on:
+    #   - app
+    volumes:
+      - vtb_app_mongo_dbdata:/data/db
+    ports:
+      - "27060:27017"
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+    #external: true
+volumes:
+  vtb_app_mongo_dbdata:
+    driver: local

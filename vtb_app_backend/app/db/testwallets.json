@@ -1,0 +1,30 @@
+{
+    "users_wallets":[
+    {
+        "publicKey": "0x213b32136Ba1f52299c3D4152F2FEb73b991366b",
+        "privateKey": "8bcfc1c2c55848deb2485aae469691404de7541ba3c54a05321ec1ad1ced3631"
+    },
+    {
+        "publicKey": "0x209b384A6d2458fF640c31176BA8E1b46AC8879b",
+        "privateKey": "7a46eaa4098e5f24e8ff64e8b15aeaa4ff452a68bdcc5ddb18e6c458792094ce"
+    },
+    {
+        "publicKey": "0x3D65Cc70Dd616E096f0580F7b2f4Bd3c2d0C6C44",
+        "privateKey": "86a96318bae8242e3ab9b24a0309ec42d875149f36e02b1b5ca753935235fde8"
+    }
+    ],
+    "global_wallets": {
+        "sell_nft": {
+            "publicKey": "0x31A72E77B9cf495eF3312adfaF076E6F3C842e22",
+            "privateKey": "9739e9461114b5f75ae6bf9b7e49c1284a2a9f1efd2307b5da08fa7d0e9c58ea"
+        },
+        "release_awards": {
+            "publicKey": "0x31A72E77B9cf495eF3312adfaF076E6F3C842e22",
+            "privateKey": "9739e9461114b5f75ae6bf9b7e49c1284a2a9f1efd2307b5da08fa7d0e9c58ea"
+        },
+        "market_buy": {
+            "publicKey": "0x31A72E77B9cf495eF3312adfaF076E6F3C842e22",
+            "privateKey": "9739e9461114b5f75ae6bf9b7e49c1284a2a9f1efd2307b5da08fa7d0e9c58ea"
+        }
+    }
+}

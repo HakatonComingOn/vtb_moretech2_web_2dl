@@ -1,0 +1,746 @@
+openapi: 3.0.0
+info:
+  title: vtb_app
+  version: 1.0.0
+servers:
+  - url: http://{{authservice}}
+tags:
+  - name: auth
+  - name: transactions
+  - name: transactions > отправка через БД
+  - name: events
+  - name: events > механики подтверждений и отчетов
+  - name: market (пример расширяемости)
+paths:
+  /api/new_user_wallert:
+    post:
+      tags:
+        - auth
+      summary: new_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                date: '2022-10-09 02:22:26.668000'
+                user_id: 3
+                name: Имя
+                phone: 8-800-555-0000
+                is_show_phone: true
+                telegram: '@darya'
+                is_show_telegram: false
+                email: test@test.ru
+                is_show_email: true
+                role:
+                  - user
+                department:
+                  name: design
+                  department_id: 2
+                job_title: designer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/edit_user_by_id/{id_user}:
+    post:
+      tags:
+        - auth
+      summary: edit_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Имя2
+                phone: 8-800-555-0000
+                is_show_phone: true
+                telegram: '@darya'
+                is_show_telegram: false
+                email: test@test.ru
+                is_show_email: true
+                role:
+                  - user
+                department:
+                  name: design
+                  department_id: 2
+                job_title: designer
+      parameters:
+        - name: id_user
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '10'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_users:
+    get:
+      tags:
+        - auth
+      summary: список юзеров
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_user/{id}:
+    get:
+      tags:
+        - auth
+      summary: пользователь
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '3'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/auth:
+    post:
+      tags:
+        - auth
+      summary: авторизация
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/mongo_coin/recharge_by_id_user:
+    post:
+      tags:
+        - transactions > отправка через БД
+      summary: начислить базовый баланс пользователю (by_iduser)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_user: 1
+                amount: 1000
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/mongo_coin/balance_by_id_user/{id_user}:
+    get:
+      tags:
+        - transactions > отправка через БД
+      summary: проверить баланс (by user_id)
+      parameters:
+        - name: id_user
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/mongo_coin/balance_by_public_key/{address}:
+    get:
+      tags:
+        - transactions > отправка через БД
+      summary: проверить баланс (by publicKey)
+      parameters:
+        - name: address
+          in: path
+          schema:
+            type: string
+          required: true
+          example: '0x3D65Cc70Dd616E096f0580F7b2f4Bd3c2d0C6C44'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/mongo_coin/send_coin_by_id_user:
+    post:
+      tags:
+        - transactions > отправка через БД
+      summary: отправка тразакции через БД (P2P) (id_user)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_user_from: 3
+                id_user_to: 1
+                amount: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/mongo_coin/send_coin_by_keys:
+    post:
+      tags:
+        - transactions > отправка через БД
+      summary: отправка тразакции через БД (Private, Public)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                fromPrivateKey: >-
+                  7a46eaa4098e5f24e8ff64e8b15aeaa4ff452a68bdcc5ddb18e6c458792094ce
+                toPublicKey: '0x3D65Cc70Dd616E096f0580F7b2f4Bd3c2d0C6C44'
+                amount: 100
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/mongo_coin/history_by_id_user/{id_user}:
+    get:
+      tags:
+        - transactions > отправка через БД
+      summary: история транзакций (by id_user)
+      parameters:
+        - name: id_user
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/mongo_coin/history_by_id_user_with_fullinfo/{id_user}:
+    get:
+      tags:
+        - transactions > отправка через БД
+      summary: история транзакций (fullinfo) (by id_user)
+      parameters:
+        - name: id_user
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/history/{id}:
+    get:
+      tags:
+        - transactions
+      summary: История пользователя
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '3'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/history_source/{id}:
+    get:
+      tags:
+        - transactions
+      summary: История транзакций
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '3'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/balance/3:
+    get:
+      tags:
+        - transactions
+      summary: Баланс пользователя
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/set_user_to_event:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: подписаться на событие
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: |-
+                {
+                    "id_event": {{TEST_EVENT_ID}},
+                    "id_user": {{TEST_EVENT_USER_ID}}
+                }
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/del_user_from_event:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: отписатсья от события
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: |-
+                {
+                    "id_event": "{{TEST_EVENT_ID}}",
+                    "id_user": {{TEST_EVENT_USER_ID}}
+                }
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/set_member_to_approved:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: апрувнуть участие пользователя на событии
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_event: 6341cfe295750b81a4365f25
+                id_user: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/del_member_from_approved:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: исключать участие пользователя из события
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_event: 6341cfe295750b81a4365f25
+                id_user: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/user_report_event:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: написать отчет по событию (для проверки)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_event: 6341cfe295750b81a4365f25
+                id_user: 10
+                text: test
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/set_approved_to_success:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: апрувнуть успешность выполнения задания пользователем на событии
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_event: 6341cfe295750b81a4365f25
+                id_user: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/del_approved_from_successed:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: отменить успешность выполнения задания пользователем на событии
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_event: 6341cfe295750b81a4365f25
+                id_user: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/set_successed_to_awarded:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: потдвердить что пользователен награжден
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_event: 6341cfe295750b81a4365f25
+                id_user: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/del_successed_from_awarded:
+    post:
+      tags:
+        - events > механики подтверждений и отчетов
+      summary: отменить факт что пользователен награжден
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: |-
+                {
+                    "id_event": {{TEST_EVENT_ID}},
+                    "id_user": {{TEST_EVENT_USER_ID}}
+                }
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/new_event:
+    post:
+      tags:
+        - market (пример расширяемости)
+      summary: новый товар
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: 1
+                title: title4
+                description: desc
+                text: text
+                CATEGORY:
+                  - market
+                TYPE:
+                  - market_item
+                imgs_urls_alboms:
+                  - id: '1'
+                    title: альбом 1
+                    url: http://
+                    imgs:
+                      - id: '1'
+                        title: картинка1
+                        type: icon
+                        url: http://
+                PRICES:
+                  - coins: 1
+                    rub: 1
+                    nfts:
+                      - 1
+                ACCESS_RULES:
+                  - можно получить/пройти только когда владеешь NFT
+                LINK_TO_NFT:
+                  - '1'
+                filter_params:
+                  - test
+                max_count_members: 10
+                all_members:
+                  - 1
+                approved_members:
+                  - 1
+                successed_members:
+                  - 1
+                awarded_members:
+                  - 1
+                date_start: ''
+                date_end: ''
+                timestamp_start: 1665202217
+                timestamp_end: 1667722171
+                creator:
+                  id: 1
+                  role: test
+                rewards:
+                  - rub: 1.1
+                    nfts:
+                      - 1
+                      - 2
+                      - 3
+                user_reports:
+                  - id_user: 1
+                    messages:
+                      - timestamp: 1665202217
+                        text: отчет
+                user_must_send_reports: true
+                status: test
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/update_event/{id_event}:
+    post:
+      tags:
+        - market (пример расширяемости)
+      summary: редактировать товар
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: 1
+                title: title4
+                description: desc
+                text: text
+                CATEGORY:
+                  - market
+                TYPE:
+                  - market_item
+                imgs_urls_alboms:
+                  - id: '1'
+                    title: альбом 1
+                    url: http://
+                    imgs:
+                      - id: '1'
+                        title: картинка1
+                        type: icon
+                        url: http://
+                PRICES:
+                  - coins: 1
+                    rub: 1
+                    nfts:
+                      - 1
+                ACCESS_RULES:
+                  - можно получить/пройти только когда владеешь NFT
+                LINK_TO_NFT:
+                  - '1'
+                filter_params:
+                  - test
+                max_count_members: 10
+                all_members:
+                  - 1
+                approved_members:
+                  - 1
+                successed_members:
+                  - 1
+                awarded_members:
+                  - 1
+                date_start: ''
+                date_end: ''
+                timestamp_start: 1665202217
+                timestamp_end: 1667722171
+                creator:
+                  id: 1
+                  role: test
+                rewards:
+                  - rub: 1.1
+                    nfts:
+                      - 1
+                      - 2
+                      - 3
+                user_reports:
+                  - id_user: 1
+                    messages:
+                      - timestamp: 1665202217
+                        text: отчет
+                user_must_send_reports: true
+                status: test
+      parameters:
+        - name: id_event
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 6341fc538936192af059ee6b
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_members_event/{id_event}:
+    get:
+      tags:
+        - events
+      summary: список участников события (по id_event)
+      parameters:
+        - name: id_event
+          in: path
+          schema:
+            type: string
+          required: true
+          example: 6341cfe295750b81a4365f25
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_all_active_events:
+    get:
+      tags:
+        - events
+      summary: взять все активные события
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_all_inactive_events:
+    get:
+      tags:
+        - events
+      summary: взять все НЕактивные события
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_all_events:
+    get:
+      tags:
+        - events
+      summary: взять все события
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_active_events/{id_user}:
+    get:
+      tags:
+        - events
+      summary: взять активные события (по id_user)
+      parameters:
+        - name: id_user
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_inactive_events/{id_user}:
+    get:
+      tags:
+        - events
+      summary: взять НЕактивные события (по id_user)
+      parameters:
+        - name: id_user
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/get_active_events_all/{id_event}:
+    get:
+      tags:
+        - events
+      summary: взять все события (по id_user)
+      parameters:
+        - name: id_event
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/find_events:
+    post:
+      tags:
+        - market (пример расширяемости)
+      summary: взять все товары по (by type)
+      description: |-
+        days_back - сколько дней назад смотреть
+
+        limit - лимит записей
+
+        TYPE - поиск по тегу, категории
+
+        (сортировка пока не готова)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                CATEGORY: []
+                TYPE:
+                  - market_item
+                id_user:
+                  - 1
+                  - 100
+                days_back: 30
+                limit: 1000
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

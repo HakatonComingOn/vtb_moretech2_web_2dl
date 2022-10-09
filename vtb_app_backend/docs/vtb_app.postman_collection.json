@@ -1,0 +1,1027 @@
+{
+	"info": {
+		"_postman_id": "bb3e29fc-5168-4245-a3f2-0cbefdfb1f86",
+		"name": "vtb_app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23758491"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "new_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n            \"date\": \"2022-10-09 02:22:26.668000\",\n            \"user_id\": 3,\n            \"name\": \"Имя\",\n            \"phone\": \"8-800-555-0000\",\n            \"is_show_phone\": true,\n            \"telegram\": \"@darya\",\n            \"is_show_telegram\": false,\n            \"email\": \"test@test.ru\",\n            \"is_show_email\": true,\n            \"role\": [\n                \"user\"\n            ],\n            \"department\": {\n                \"name\": \"design\",\n                \"department_id\": 2\n            },\n            \"job_title\": \"designer\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/new_user_wallert",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"new_user_wallert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n            \"name\": \"Имя2\",\n            \"phone\": \"8-800-555-0000\",\n            \"is_show_phone\": true,\n            \"telegram\": \"@darya\",\n            \"is_show_telegram\": false,\n            \"email\": \"test@test.ru\",\n            \"is_show_email\": true,\n            \"role\": [\n                \"user\"\n            ],\n            \"department\": {\n                \"name\": \"design\",\n                \"department_id\": 2\n            },\n            \"job_title\": \"designer\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/edit_user_by_id/:id_user",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"edit_user_by_id",
+								":id_user"
+							],
+							"variable": [
+								{
+									"key": "id_user",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "список юзеров",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_users",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "пользователь",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_user/:id",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "авторизация",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":1}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/auth",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transactions",
+			"item": [
+				{
+					"name": "отправка через БД",
+					"item": [
+						{
+							"name": "начислить базовый баланс пользователю (by_iduser)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_user\":1,\n    \"amount\":1000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/mongo_coin/recharge_by_id_user",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"mongo_coin",
+										"recharge_by_id_user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "проверить баланс (by user_id)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{authService}}/api/mongo_coin/balance_by_id_user/:id_user",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"mongo_coin",
+										"balance_by_id_user",
+										":id_user"
+									],
+									"variable": [
+										{
+											"key": "id_user",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "проверить баланс (by publicKey)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{authService}}/api/mongo_coin/balance_by_public_key/:address",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"mongo_coin",
+										"balance_by_public_key",
+										":address"
+									],
+									"variable": [
+										{
+											"key": "address",
+											"value": "0x3D65Cc70Dd616E096f0580F7b2f4Bd3c2d0C6C44"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "отправка тразакции через БД (P2P) (id_user)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id_user_from\": 3,\n  \"id_user_to\": 1,\n  \"amount\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/mongo_coin/send_coin_by_id_user",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"mongo_coin",
+										"send_coin_by_id_user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "отправка тразакции через БД (Private, Public)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"fromPrivateKey\": \"7a46eaa4098e5f24e8ff64e8b15aeaa4ff452a68bdcc5ddb18e6c458792094ce\",\n  \"toPublicKey\": \"0x3D65Cc70Dd616E096f0580F7b2f4Bd3c2d0C6C44\",\n  \"amount\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/mongo_coin/send_coin_by_keys",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"mongo_coin",
+										"send_coin_by_keys"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "история транзакций (by id_user)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{authService}}/api/mongo_coin/history_by_id_user/:id_user",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"mongo_coin",
+										"history_by_id_user",
+										":id_user"
+									],
+									"variable": [
+										{
+											"key": "id_user",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "история транзакций (fullinfo) (by id_user)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{authService}}/api/mongo_coin/history_by_id_user_with_fullinfo/:id_user",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"mongo_coin",
+										"history_by_id_user_with_fullinfo",
+										":id_user"
+									],
+									"variable": [
+										{
+											"key": "id_user",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "история транзакций (by  publicKey)",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "генерация выплаты ЗП (demo)",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "История пользователя",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/history/:id",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"history",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "История транзакций",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/history_source/:id",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"history_source",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Баланс пользователя",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/balance/3",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"balance",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "events",
+			"item": [
+				{
+					"name": "механики подтверждений и отчетов",
+					"item": [
+						{
+							"name": "подписаться на событие",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": {{TEST_EVENT_ID}},\n    \"id_user\": {{TEST_EVENT_USER_ID}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/set_user_to_event",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"set_user_to_event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "отписатсья от события",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": \"{{TEST_EVENT_ID}}\",\n    \"id_user\": {{TEST_EVENT_USER_ID}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/del_user_from_event",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"del_user_from_event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "апрувнуть участие пользователя на событии",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": \"6341cfe295750b81a4365f25\",\n    \"id_user\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/set_member_to_approved",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"set_member_to_approved"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "исключать участие пользователя из события",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": \"6341cfe295750b81a4365f25\",\n    \"id_user\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/del_member_from_approved",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"del_member_from_approved"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "написать отчет по событию (для проверки)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": \"6341cfe295750b81a4365f25\",\n    \"id_user\": 10,\n    \"text\": \"test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/user_report_event",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"user_report_event"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "апрувнуть успешность выполнения задания пользователем на событии",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": \"6341cfe295750b81a4365f25\",\n    \"id_user\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/set_approved_to_success",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"set_approved_to_success"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "отменить успешность выполнения задания пользователем на событии",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": \"6341cfe295750b81a4365f25\",\n    \"id_user\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/del_approved_from_successed",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"del_approved_from_successed"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "потдвердить что пользователен награжден",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": \"6341cfe295750b81a4365f25\",\n    \"id_user\": 10\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/set_successed_to_awarded",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"set_successed_to_awarded"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "отменить факт что пользователен награжден",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id_event\": {{TEST_EVENT_ID}},\n    \"id_user\": {{TEST_EVENT_USER_ID}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authService}}/api/del_successed_from_awarded",
+									"host": [
+										"{{authService}}"
+									],
+									"path": [
+										"api",
+										"del_successed_from_awarded"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "новое событие/квест/курс",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n  \"id\": 1,\n  \"title\": \"title4\",\n  \"description\": \"desc\",\n  \"text\": \"text\",\n  \"CATEGORY\": [\"events\"],\n  \"TYPE\": [\"event_item\"],\n  \"imgs_urls_alboms\": [\n            {\"id\":\"1\", \n            \"title\":\"альбом 1\",\n            \"url\": \"http://\",\n            \"imgs\": [{\"id\":\"1\", \n                     \"title\":\"картинка1\",\n                     \"type\": \"icon\",\n                     \"url\":\"http://\"\n                     }] }\n      ],\n  \"PRICES\": [ {\"coins\":1.0, \"rub\": 1.0, \"nfts\": [1] } ],\n  \"ACCESS_RULES\": [\"можно получить/пройти только когда владеешь NFT\"],\n  \"LINK_TO_NFT\": [\"1\"],\n  \"filter_params\": [\"test\"],  \n  \"max_count_members\": 10,\n  \"all_members\": [1],\n  \"approved_members\": [1],\n  \"successed_members\": [1],\n  \"awarded_members\": [1],\n  \"date_start\": \"\",\n  \"date_end\": \"\",\n  \"timestamp_start\": 1665202217,\n  \"timestamp_end\": 1667722171,\n  \"creator\": {\n    \"id\": 1,\n    \"role\": \"test\"\n  },\n  \"rewards\": [{\n    \"rub\": 1.1,\n    \"nfts\": [1,2,3]\n  }],\n  \"user_reports\": [\n      {\"id_user\": 1, \"messages\":[\n                        { \"timestamp\":1665202217 , \"text\": \"отчет\" }\n                                ] }\n  ],\n  \"user_must_send_reports\": true, \n  \"status\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/new_event",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"new_event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "редактировать событие/квест/курс",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"title\": \"title8\",\n  \"description\": \"desc\",\n  \"text\": \"text\",\n  \"TYPE\": [\"event_item\"],\n  \"imgs_urls_alboms\": [\n            {\"id\":\"1\", \n            \"title\":\"альбом 1\",\n            \"url\": \"http://\",\n            \"imgs\": [{\"id\":\"1\", \n                     \"title\":\"картинка1\",\n                     \"type\": \"icon\",\n                     \"url\":\"http://\"\n                     }] }\n      ],\n  \"PRICES\": [ {\"coins\":1.0, \"rub\": 1.0, \"nfts\": [1] } ],\n  \"ACCESS_RULES\": [\"можно получить/пройти только когда владеешь NFT\"],\n  \"LINK_TO_NFT\": [\"1\"],\n  \"filter_params\": [\"test\"],  \n  \"max_count_members\": 10,\n  \"date_start\": \"\",\n  \"date_end\": \"\",\n  \"timestamp_start\": 1665202217,\n  \"timestamp_end\": 166772217221,\n  \"creator\": {\n    \"id\": 1,\n    \"role\": \"test22321\"\n  },\n  \"rewards\": [{\n    \"rub\": 1.1,\n    \"nfts\": [1,2,3]\n  }],\n  \"user_must_send_reports\": true, \n  \"status\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/update_event/:id_event",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"update_event",
+								":id_event"
+							],
+							"variable": [
+								{
+									"key": "id_event",
+									"value": "6341fc538936192af059ee6b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "список участников события (по id_event)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_members_event/:id_event",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_members_event",
+								":id_event"
+							],
+							"variable": [
+								{
+									"key": "id_event",
+									"value": "6341cfe295750b81a4365f25"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "взять все активные события",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_all_active_events",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_all_active_events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "взять все НЕактивные события",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_all_inactive_events",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_all_inactive_events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "взять все события",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_all_events",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_all_events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "взять активные события (по id_user)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_active_events/:id_user",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_active_events",
+								":id_user"
+							],
+							"variable": [
+								{
+									"key": "id_user",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "взять НЕактивные события (по id_user)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_inactive_events/:id_user",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_inactive_events",
+								":id_user"
+							],
+							"variable": [
+								{
+									"key": "id_user",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "взять все события (по id_user)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{authService}}/api/get_active_events_all/:id_event",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"get_active_events_all",
+								":id_event"
+							],
+							"variable": [
+								{
+									"key": "id_event",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "market (пример расширяемости)",
+			"item": [
+				{
+					"name": "новый товар",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n  \"id\": 1,\n  \"title\": \"title4\",\n  \"description\": \"desc\",\n  \"text\": \"text\",\n \"CATEGORY\": [\"market\"],\n  \"TYPE\": [\"market_item\"],\n  \"imgs_urls_alboms\": [\n            {\"id\":\"1\", \n            \"title\":\"альбом 1\",\n            \"url\": \"http://\",\n            \"imgs\": [{\"id\":\"1\", \n                     \"title\":\"картинка1\",\n                     \"type\": \"icon\",\n                     \"url\":\"http://\"\n                     }] }\n      ],\n  \"PRICES\": [ {\"coins\":1.0, \"rub\": 1.0, \"nfts\": [1] } ],\n  \"ACCESS_RULES\": [\"можно получить/пройти только когда владеешь NFT\"],\n  \"LINK_TO_NFT\": [\"1\"],\n  \"filter_params\": [\"test\"],  \n  \"max_count_members\": 10,\n  \"all_members\": [1],\n  \"approved_members\": [1],\n  \"successed_members\": [1],\n  \"awarded_members\": [1],\n  \"date_start\": \"\",\n  \"date_end\": \"\",\n  \"timestamp_start\": 1665202217,\n  \"timestamp_end\": 1667722171,\n  \"creator\": {\n    \"id\": 1,\n    \"role\": \"test\"\n  },\n  \"rewards\": [{\n    \"rub\": 1.1,\n    \"nfts\": [1,2,3]\n  }],\n  \"user_reports\": [\n      {\"id_user\": 1, \"messages\":[\n                        { \"timestamp\":1665202217 , \"text\": \"отчет\" }\n                                ] }\n  ],\n  \"user_must_send_reports\": true, \n  \"status\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/new_event",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"new_event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "редактировать товар",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n  \"id\": 1,\n  \"title\": \"title4\",\n  \"description\": \"desc\",\n  \"text\": \"text\",\n  \"CATEGORY\": [\"market\"],\n  \"TYPE\": [\"market_item\"],\n  \"imgs_urls_alboms\": [\n            {\"id\":\"1\", \n            \"title\":\"альбом 1\",\n            \"url\": \"http://\",\n            \"imgs\": [{\"id\":\"1\", \n                     \"title\":\"картинка1\",\n                     \"type\": \"icon\",\n                     \"url\":\"http://\"\n                     }] }\n      ],\n  \"PRICES\": [ {\"coins\":1.0, \"rub\": 1.0, \"nfts\": [1] } ],\n  \"ACCESS_RULES\": [\"можно получить/пройти только когда владеешь NFT\"],\n  \"LINK_TO_NFT\": [\"1\"],\n  \"filter_params\": [\"test\"],  \n  \"max_count_members\": 10,\n  \"all_members\": [1],\n  \"approved_members\": [1],\n  \"successed_members\": [1],\n  \"awarded_members\": [1],\n  \"date_start\": \"\",\n  \"date_end\": \"\",\n  \"timestamp_start\": 1665202217,\n  \"timestamp_end\": 1667722171,\n  \"creator\": {\n    \"id\": 1,\n    \"role\": \"test\"\n  },\n  \"rewards\": [{\n    \"rub\": 1.1,\n    \"nfts\": [1,2,3]\n  }],\n  \"user_reports\": [\n      {\"id_user\": 1, \"messages\":[\n                        { \"timestamp\":1665202217 , \"text\": \"отчет\" }\n                                ] }\n  ],\n  \"user_must_send_reports\": true, \n  \"status\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/update_event/:id_event",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"update_event",
+								":id_event"
+							],
+							"variable": [
+								{
+									"key": "id_event",
+									"value": "6341fc538936192af059ee6b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "взять все товары по (by type)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n      \"CATEGORY\":               [],\n      \"TYPE\":               [\"market_item\"],\n      \"id_user\":            [1,100],\n      \"days_back\":          30,\n      \"limit\":             1000\n      \n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{authService}}/api/find_events",
+							"host": [
+								"{{authService}}"
+							],
+							"path": [
+								"api",
+								"find_events"
+							]
+						},
+						"description": "days_back - сколько дней назад смотреть\n\nlimit - лимит записей\n\nTYPE - поиск по тегу, категории\n\n(сортировка пока не готова)"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

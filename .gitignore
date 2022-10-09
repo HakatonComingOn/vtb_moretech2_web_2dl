@@ -1,0 +1,11 @@
+**/venv
+**/__pycache__
+**/venv
+**/reviews_postgre
+**/dbdata
+**/.env**
+**/.globenv**
+**/dumps
+**/.~lock.**
+**/.idea**
+**/testmongo_id.json
